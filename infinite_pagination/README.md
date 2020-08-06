@@ -13,15 +13,15 @@ This package maybe is the Most *Simplest* Wrap for truly infinite list.
 
 When Pull up, the progressive placeholder indicate loading.
 
-![loading placeholder](../images/pull-up.png)
+![loading placeholder](https://github.com/pedia/infinite_pagination/raw/master/images/pull-up.png)
 
 When Drag down, out of screen items was evicted is loading again.
 
-![loading placeholder](../images/drag-down.png)
+![loading placeholder](https://github.com/pedia/infinite_pagination/raw/master/images/drag-down.png)
 
 Animcation demo.
 
-![gif](../images/full-demo.gif)
+![gif](https://github.com/pedia/infinite_pagination/raw/master/images/full-demo.gif)
 
 
 ## How to use

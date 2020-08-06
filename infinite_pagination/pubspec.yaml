@@ -1,6 +1,6 @@
 name: infinite_pagination
-description: Truly infinite list helper
-version: 0.0.1
+description: Truly infinite list helper, provider fixed memory consumption.
+version: 0.0.2
 homepage: https://github.com/pedia/infinite_pagination
 
 environment:
