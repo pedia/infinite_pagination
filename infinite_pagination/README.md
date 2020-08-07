@@ -19,7 +19,7 @@ When Drag down, out of screen items was evicted is loading again.
 
 ![loading placeholder](https://github.com/pedia/infinite_pagination/raw/master/images/drag-down.png)
 
-Animcation demo.
+Animation demo.
 
 ![gif](https://github.com/pedia/infinite_pagination/raw/master/images/full-demo.gif)
 
@@ -34,7 +34,7 @@ dependencies:
   provider:
 ```
 
-Usally we use [provider](https://pub.dev/packages/provider) as State Management.
+Usually we use [provider](https://pub.dev/packages/provider) as State Management.
 
 
 ```dart
@@ -88,10 +88,10 @@ Widget build(BuildContext context) {
 }
 ```
 
-## Best Experence of saving memory
+## Best experience of saving memory
 
 - Use [file_cache](https://pub.dev/packages/file_cache) cache Http Request in file system.
 - Use this package indicate loading and infinite paging.
 
 
-This package is inspired by(copy from) [offical sample](https://github.com/flutter/samples/tree/master/infinite_list) 
+This package is inspired by(copy from) [official sample](https://github.com/flutter/samples/tree/master/infinite_list) 
