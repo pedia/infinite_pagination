@@ -2,7 +2,7 @@ library infinite_pagination;
 
 import 'package:flutter/material.dart';
 
-/// Containe one page of items
+/// Contained one page of items
 class Pagination<T> {
   Pagination({
     this.items,
@@ -22,13 +22,14 @@ class InfinitePagination<T> extends ChangeNotifier {
     this.maxCacheDistance = 100,
   }) : assert(maxCacheDistance > itemsPerPage);
 
-  /// Async function for fetching a page of items, usally this is an Http
+  /// Async function for fetching a page of items, usually this is an Http
   /// request.
   ///
   /// ```dart
   /// Future <Pagination<T>> fetchPage(int startingIndex, int itemsPerPage) async
   /// ```
-  /// Must provider this argument if we donot extends from [InfinitePagination].
+  /// If [fetcher] is provide, we should extend from [InfinitePagination] and
+  /// implement [fetch].
   final Future<Pagination<T>> Function(int, int) fetcher;
 
   ///
@@ -45,6 +46,9 @@ class InfinitePagination<T> extends ChangeNotifier {
   /// The key of the map is the starting index of the page, for faster
   /// access.
   final Map<int, Pagination<T>> _pages = {};
+
+  @visibleForTesting
+  get pages => _pages;
 
   /// A set of pages (represented by their starting index) that have started
   /// the fetch process but haven't ended it yet.
@@ -68,6 +72,7 @@ class InfinitePagination<T> extends ChangeNotifier {
   }
 
   Future<Pagination<T>> fetch(int startingIndex, int itemsPerPage) async {
+    assert(fetcher != null);
     return fetcher(startingIndex, itemsPerPage);
   }
 
@@ -96,7 +101,9 @@ class InfinitePagination<T> extends ChangeNotifier {
     }
 
     // We don't have the data yet. Start fetching it.
-    _fetchPage(startingIndex);
+    if (itemCount == null) {
+      _fetchPage(startingIndex).then((_) {});
+    }
 
     // In the meantime, return a placeholder.
     return null;
@@ -113,7 +120,7 @@ class InfinitePagination<T> extends ChangeNotifier {
     final page = await fetch(startingIndex, itemsPerPage);
     _pagesBeingFetched.remove(startingIndex);
 
-    if (!page.hasNext) {
+    if (!page.hasNext && itemCount == null) {
       // The returned page has no next page. This means we now know the size.
       itemCount = startingIndex + page.items.length;
     }
@@ -145,6 +152,22 @@ class InfinitePagination<T> extends ChangeNotifier {
       _pages.remove(key);
     }
   }
+
+  bool get isEmpty => _pages.isNotEmpty && itemCount == 0;
+
+  @override
+  String toString() {
+    return 'InfinitePagination(total: $itemCount page: ${_pages.length}/${_pages.keys} '
+        'fetched page: $_pagesBeingFetched/${_pagesBeingFetched})';
+  }
+
+  void clear() {
+    _pages.clear();
+    _pagesBeingFetched.clear();
+    itemCount = null;
+
+    if (!_isDisposed) notifyListeners();
+  }
 }
 
 /// This is the widget responsible for building the "still loading" item
@@ -154,26 +177,25 @@ class LoadingTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).backgroundColor.computeLuminance() < 0.179;
+
+    final color = isDark ? Colors.grey[850] : Colors.grey[200];
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListTile(
         leading: AspectRatio(
           aspectRatio: 1,
-          child: Container(
-            color: Colors.grey[200],
-            width: 50,
-            height: 50,
-          ),
+          child: Container(color: color),
         ),
         title: Container(
-          color: Colors.grey[200],
+          color: color,
           margin: EdgeInsets.only(right: 100),
-          height: 20,
+          height: 24,
         ),
         subtitle: Container(
-          color: Colors.grey[200],
-          // width: 200,
-          height: 10,
+          color: color,
+          height: 14,
         ),
       ),
     );

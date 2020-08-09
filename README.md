@@ -95,17 +95,3 @@ Widget build(BuildContext context) {
 
 
 This package is inspired by(copy from) [official sample](https://github.com/flutter/samples/tree/master/infinite_list) 
-
-
-## Build Demo
-
-```shell
-git clone --depth 1 https://github.com/pedia/infinite_pagination
-cd infinite_pagination
-
-# Recreate demo app for add ios/android/macos/web file back.
-flutter create -t app .
-
-# Start this demo, or `-d xx` for other device
-flutter run -d macos
-```

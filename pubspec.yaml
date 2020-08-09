@@ -1,9 +1,7 @@
-name: infinite_pagination_demo
-description: Truly infinite list demo
-
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
-version: 1.0.0+1
+name: infinite_pagination
+description: Truly infinite list helper, provider fixed memory consumption.
+version: 0.0.3
+homepage: https://github.com/pedia/infinite_pagination
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -11,10 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider:
-  file_cache:
-  infinite_pagination:
-    path: infinite_pagination
+
+  provider: ^4.0.0
 
 dev_dependencies:
   flutter_test:
